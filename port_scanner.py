@@ -16,7 +16,7 @@ class PortsScanner:
     host = ''
     mask = ''
     ports_to_scan = []
-    __max_threads = 200
+    __max_threads = 100
     __queue_output = queue.Queue()
     __lock = threading.Lock()
     nm = nmap3.Nmap()
