@@ -4,8 +4,6 @@ import re
 import socket
 import threading
 import time
-
-import nmap3
 import requests
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
@@ -19,7 +17,6 @@ class PortsScanner:
     __max_threads = 100
     __queue_output = queue.Queue()
     __lock = threading.Lock()
-    nm = nmap3.Nmap()
 
     def __init__(self):
         self.get_input_data()
@@ -84,7 +81,7 @@ class PortsScanner:
     def __check_connection(self, ip, port):
         sock_ = socket.socket()
         try:
-            sock_.settimeout(2.0)  # seconds
+            sock_.settimeout(5.0)  # seconds
             sock_.connect((ip, port))
         except Exception:
             pass
