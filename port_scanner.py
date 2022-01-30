@@ -69,9 +69,10 @@ class PortsScanner:
                 self.scan_ports(ip=format(broadcast_address), ports=self.ports_to_scan)
 
             for host in list(network.hosts()):
-                while threading.active_count() > self.__max_threads:
-                    time.sleep(1)
-                self.scan_ports(ip=format(host), ports=self.ports_to_scan)
+                if str(format(host)) != str(network_address) and str(format(host)) != str(broadcast_address):
+                    while threading.active_count() > self.__max_threads:
+                        time.sleep(1)
+                    self.scan_ports(ip=format(host), ports=self.ports_to_scan)
 
     def scan_ports(self, ip, ports):
         for port in ports:
