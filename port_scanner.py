@@ -1,5 +1,4 @@
 import ipaddress
-import queue
 import re
 import socket
 import threading
@@ -15,7 +14,6 @@ class PortsScanner:
     mask = ''
     ports_to_scan = []
     __max_threads = 100
-    __queue_output = queue.Queue()
     __lock = threading.Lock()
 
     def __init__(self):
@@ -60,6 +58,7 @@ class PortsScanner:
         if len(self.host) > 0 and len(self.ports_to_scan) > 0 and len(self.mask) > 0:
             print('Scan started...')
             network = ipaddress.ip_network(f'{self.host}/{self.mask}', strict=False)
+
             network_address = network.network_address
             if network_address is not None:
                 self.scan_ports(ip=format(network_address), ports=self.ports_to_scan)
