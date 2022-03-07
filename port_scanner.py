@@ -3,6 +3,7 @@ import re
 import socket
 import threading
 import time
+
 import requests
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
@@ -37,7 +38,8 @@ class PortsScanner:
             return
 
     def get_ports(self):
-        ports_input = input('Please provide ports to scan. For example: 80, 443, 442, 8443, 5555, 22, 21, 23\n').replace(' ', '')
+        ports_input = input(
+            'Please provide ports to scan. For example: 80, 443, 442, 8443, 5555, 22, 21, 23\n').replace(' ', '')
         if len(ports_input) > 0:
             self.ports_to_scan = list(set([int(port) for port in re.findall('[0-9]+', ports_input)]))
             if len(self.ports_to_scan) > 0:
@@ -45,12 +47,13 @@ class PortsScanner:
         print('Error ', end='')
 
     def get_ip(self):
-        ips_input = input('Please provide ip and mask. For example: 192.168.1.0/24\n').replace(' ', '')
+        # ips_input = input('Please provide ip and mask. For example: 192.168.1.0/24\n').replace(' ', '')
+        ips_input = '192.168.1.0/24'
         if len(ips_input) > 0:
-            ip_tpl = re.findall(r"([0-9]{,3}\.[0-9]{,3}\.[0-9]{,3}\.[0-9]{,3}/[0-9]{,3})", ips_input)
+            ip_tpl = re.findall(r"(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})/(\d{1,3})", ips_input)
             if len(ip_tpl) > 0:
-                self.host = ip_tpl[0].split('/')[0]
-                self.mask = ip_tpl[0].split('/')[1]
+                self.host = ip_tpl[0][0]
+                self.mask = ip_tpl[0][1]
                 return self.host, self.mask
         print('Error ', end='')
 
