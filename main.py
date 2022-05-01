@@ -1,7 +1,10 @@
+import asyncio
+
 from port_scanner import PortsScanner
 
-try:
-    port_scanner = PortsScanner()
-    port_scanner.start_scan()
-except KeyboardInterrupt:
-    pass
+if __name__ == '__main__':
+    try:
+        port_scanner = PortsScanner()
+        asyncio.get_event_loop().run_until_complete(port_scanner.run())
+    except KeyboardInterrupt:
+        pass
